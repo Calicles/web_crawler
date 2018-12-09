@@ -2,11 +2,10 @@ package crawler;
 
 import org.jsoup.nodes.Document;
 
-import com.antoine.contracts.Crawler;
 import com.antoine.contracts.Entity;
 import com.antoine.entity.Championship;
 
-public class ChampionshipCrawler extends AbstractCrawler implements Crawler {
+public class ChampionshipCrawler extends AbstractCrawler {
 	
 	private String nameSelector, challenge_typeSelector, price_moneySelector;
 	

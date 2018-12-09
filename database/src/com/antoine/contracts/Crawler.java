@@ -5,5 +5,7 @@ import org.jsoup.nodes.Document;
 public interface Crawler {
 	
 	Entity crawl(Document doc);
+	
+	Entity[] crawlAll(Document doc);
 
 }

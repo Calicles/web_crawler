@@ -12,14 +12,12 @@ import com.antoine.entity.Championship;
 import com.antoine.entity.Driver;
 import com.antoine.entity.Hippodrome;
 import com.antoine.entity.Horse;
-import com.antoine.entity.Palmares;
 import com.antoine.entity.Participation;
 import com.antoine.entity.Race;
 
 import database.DriverDAO;
 import database.HippodromeDAO;
 import database.HorseDAO;
-import database.PalmaresDAO;
 import database.ParticipationDAO;
 import database.RaceDAO;
 import services.XML_Parser;
@@ -32,7 +30,6 @@ public class Hive {
 	private Horse horses[];
 	private Driver drivers[];
 	private Participation participations[];
-	private Palmares palmares;
 	private Race race;
 	private Championship championship;
 	private Hippodrome hippodrome;
@@ -61,11 +58,9 @@ public class Hive {
 					race= spider.bringRace();
 					championship= spider.bringShampionship();
 					hippodrome= spider.bringHippodrome();
-					palmares= new Palmares(horses);
 					
 					race.setChampionship(championship);
 					race.setHippodrome(hippodrome);
-					race.setPalmares(palmares);
 					
 					persistEntity();
 
@@ -87,14 +82,14 @@ public class Hive {
 			DriverDAO.insertDriver(drivers[i]);
 			participations[i].setDriver_lastName(drivers[i].getLastName());
 			participations[i].setDriver_firstName(drivers[i].getFirstName());
-			participations[i].setId_horse(horses[i].getName());
 		}
 		
-		PalmaresDAO.insertPalmares(palmares);
 		HippodromeDAO.insertHippodrome(hippodrome);
 		RaceDAO.insertRace(race);
 		
 		for(int i=0; i<horses.length; i++) {
+			
+			participations[i].setId_race(race.getId());
 			ParticipationDAO.insertParticipation(participations[i]);
 		}
 	}

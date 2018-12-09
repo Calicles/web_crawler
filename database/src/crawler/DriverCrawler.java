@@ -2,7 +2,6 @@ package crawler;
 
 import org.jsoup.nodes.Document;
 
-import com.antoine.contracts.Crawler;
 import com.antoine.contracts.Entity;
 import com.antoine.entity.Driver;
 

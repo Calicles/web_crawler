@@ -53,9 +53,5 @@ public class HippodromeCrawler extends AbstractCrawler implements Crawler {
 		}
 		return hippodrome;
 	}
-	
-	
-	
-	
 
 }

@@ -10,9 +10,8 @@
 		<constructor-arg type="String" value="config/coursesUrl.xml" />
 		<property name="spider">
 			<bean id="spider" class="model.Spider">
-				<property name="listDriverUrlSelector" value="" />
-				<property name="listHorseUrlSelector" value="" />
-				<property name="horse_numberSelector" value="" />
+				<property name="listDriverUrlSelector" value="la fiche du jockey" />
+				<property name="listHorseUrlSelector" value="la fiche du cheval" />
 				<property name="horseCrawler">
 					<bean id="horseCrawler" class="crawler.HorseCrawler">
 						<property name="nameSelector" value="hello" />
@@ -29,6 +28,15 @@
 					<bean id="driverCrawler" class="crawler.DriverCrawler">
 						<property name="lastNameSelector" value="" />	
 						<property name="firstNameSelector" value="" />
+					</bean>
+				</property>
+				<property name="participationCrawler">
+					<bean id="participationCrawler" class="crawler.ParticipationCrawler">
+						<property name="id_horseSelector" value="" />
+						<property name="redKmSelector" value="" />
+						<property name="horse_numberSelector" value="" />
+						<property name="positioningSelector" value="" />
+						<property name="ratingSelector" value="" />
 					</bean>
 				</property>
 				<property name="hippodromeCrawler">

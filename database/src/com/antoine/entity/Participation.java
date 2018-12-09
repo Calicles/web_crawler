@@ -2,8 +2,9 @@ package com.antoine.entity;
 
 public class Participation extends AbstractEntity {
 	
-	String id_horse, driver_lastName, driver_firstName;
-	int id_race, horse_number;
+	String id_horse, driver_lastName, driver_firstName, redKm;
+	int id_race, horse_number, positioning;
+	double rating;
 	
 	public Participation(Horse horse, Driver driver, int race) {
 		this.id_horse= horse.getName();
@@ -18,6 +19,12 @@ public class Participation extends AbstractEntity {
 
 	public int getHorse_number() {return this.horse_number;}
 	public void setHorse_number(int horse_number) {this.horse_number= horse_number;}
+	public int getPositioning() {return this.positioning;}
+	public void setPositioning(int positioning) {this.positioning= positioning;}
+	public double getRating() {return this.rating;}
+	public void setRating(double rating) {this.rating= rating;}
+	public String getRedKm() {return this.redKm;}
+	public void setRedKm(String redKm) {this.redKm= redKm;}
 	public String getId_horse() {
 		return id_horse;
 	}

@@ -33,9 +33,9 @@ public class SpiderLeg {
 		
 		for(Element link:linksOnPage) {
 		
-			if(link.className().equals(selector)) {
-				
-				links.add(link.absUrl("href"));
+			if(link.hasAttr("title")) {
+				if(link.attr("title").contains(selector))	
+					links.add(link.absUrl("href"));
 			}
 		}
 		if(links.size() == 0) throw new RuntimeException("Liste Url vide");

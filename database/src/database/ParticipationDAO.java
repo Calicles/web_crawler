@@ -37,6 +37,9 @@ public class ParticipationDAO {
 		participation.setDriver_lastName(rs.getString("driver_lastName"));
 		participation.setDriver_firstName(rs.getString("driver_firstName"));
 		participation.setId_race(rs.getInt("id_race"));
+		participation.setPositioning(rs.getInt("positioning"));
+		participation.setRating(rs.getDouble("rating"));
+		participation.setRedKm(rs.getString("redKm"));
 		
 		return participation;
 	}
@@ -80,12 +83,16 @@ public class ParticipationDAO {
 		
 		try {
 	        PreparedStatement ps = connection.prepareStatement("INSERT INTO participation VALUES (id_horse= ?, "
-	        		+ "driver_lastName= ?, driver_firstName= ?, id_race= ?);");
+	        		+ "driver_lastName= ?, driver_firstName= ?, id_race= ?, horse_number= ?, positioning= ?, rating= ?, redKm= ?);");
 	        
 	        ps.setString(1, participation.getId_horse());
 	        ps.setString(2, participation.getDriver_lastName());
 	        ps.setString(3, participation.getDriver_firstName());
 	        ps.setInt(4, participation.getId_race());
+	        ps.setInt(5, participation.getHorse_number());
+	        ps.setInt(6, participation.getPositioning());
+	        ps.setDouble(7, participation.getRating());
+	        ps.setString(8, participation.getRedKm());
 	        
 	        if(ps.executeUpdate() == 1)
 	        	return true;
@@ -100,18 +107,23 @@ public class ParticipationDAO {
 		
 		try {
 			PreparedStatement ps= conn.prepareStatement("UPDATE participation SET id_horse= ?, "
-					+ "driver_lastName= ?, driver_firstName= ?, id_race= ? WHERE id_horse= ?, " + 
+					+ "driver_lastName= ?, driver_firstName= ?, id_race= ?, horse_number= ? positioning= ?, rating= ?, redKm= ? "
+					+ "WHERE id_horse= ?, " + 
 					"driver_lastName= ?, driver_firstName= ?, id_race= ?;");
 			
 			ps.setString(1, participation.getId_horse());
 			ps.setString(2, participation.getDriver_lastName());
 			ps.setString(3, participation.getDriver_firstName());
 			ps.setInt(4, participation.getId_race());
+			ps.setInt(5, participation.getHorse_number());
+			ps.setInt(6, participation.getPositioning());
+			ps.setDouble(7, participation.getRating());
+			ps.setString(8, participation.getRedKm());
 			
-			ps.setString(5, participation.getId_horse());
-			ps.setString(6, participation.getDriver_lastName());
-			ps.setString(7, participation.getDriver_firstName());
-			ps.setInt(8, participation.getId_race());
+			ps.setString(9, participation.getId_horse());
+			ps.setString(10, participation.getDriver_lastName());
+			ps.setString(11, participation.getDriver_firstName());
+			ps.setInt(12, participation.getId_race());
 			
 	        
 	        if(ps.executeUpdate() == 1)

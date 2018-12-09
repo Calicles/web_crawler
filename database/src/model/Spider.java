@@ -4,11 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import com.antoine.contracts.Crawler;
-import com.antoine.contracts.Entity;
 import com.antoine.entity.Championship;
 import com.antoine.entity.Driver;
 import com.antoine.entity.Hippodrome;
@@ -19,8 +16,8 @@ import com.antoine.entity.Race;
 public class Spider {
 	
 	private List<String> urlDriversList, urlHorsesList;
-	private String listDriverUrlSelector, listHorseUrlSelector, horse_numberSelector;
-	private Crawler horseCrawler, driverCrawler, raceCrawler, championshipCrawler, hippodromeCrawler;
+	private String listDriverUrlSelector, listHorseUrlSelector;
+	private Crawler horseCrawler, driverCrawler, participationCrawler, raceCrawler, championshipCrawler, hippodromeCrawler;
 	private SpiderLeg leg;
 
 	public void setHorseCrawler(Crawler horseCrawler) {
@@ -31,6 +28,9 @@ public class Spider {
 		this.driverCrawler = driverCrawler;
 	}
 
+	public void setParticipationCrawler(Crawler participationCrawler){
+		this.participationCrawler= participationCrawler;
+	}
 	public void setRaceCrawler(Crawler raceCrawler) {
 		this.raceCrawler = raceCrawler;
 	}
@@ -41,10 +41,6 @@ public class Spider {
 
 	public void setHippodromeCrawler(Crawler hippodromeCrawler) {
 		this.hippodromeCrawler = hippodromeCrawler;
-	}
-
-	public void setHorse_numberSelector(String horse_numberSelector) {
-		this.horse_numberSelector= horse_numberSelector;
 	}
 	
 	public void setListDriverUrlSelector(String driverUrlSelector) {
@@ -91,14 +87,9 @@ public class Spider {
 	public Participation[] bringParticipations() {
 		Participation[] participations= new Participation[urlDriversList.size()];
 		Document doc= leg.getDocument();
-		Elements elements= doc.getElementsByAttribute(horse_numberSelector);
-		int i=0;
 		
-		for(Element e:elements) {
-			participations[i]= new Participation();
-			participations[i].setHorse_number(Integer.parseInt(e.text()));
-			i++;
-		}
+		participations= (Participation[]) participationCrawler.crawlAll(doc);
+		
 		return participations;
 	}
 	
