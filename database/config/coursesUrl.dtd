@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!ELEMENT url (#PCDATA)>
+<!ATTLIST url date CDATA  #REQUIRED>
+<!ATTLIST url location CDATA #REQUIRED>
+<!ATTLIST url prix CDATA #REQUIRED>

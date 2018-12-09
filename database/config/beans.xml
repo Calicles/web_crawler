@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<bean id="canalTurfCrawler" class="model.Hive">
+		<constructor-arg type="String" value="config/coursesUrl.xml" />
+		<property name="spider">
+			<bean id="spider" class="model.Spider">
+				<property name="listDriverUrlSelector" value="" />
+				<property name="listHorseUrlSelector" value="" />
+				<property name="horse_numberSelector" value="" />
+				<property name="horseCrawler">
+					<bean id="horseCrawler" class="crawler.HorseCrawler">
+						<property name="nameSelector" value="hello" />
+						<property name="fatherSelector" value="hello" />
+						<property name="motherSelector" value="hello" />
+						<property name="robeSelector" value="hello" />
+						<property name="ownerSelector" value="hello" />
+						<property name="coachSelector" value="hello" />
+						<property name="money_wonSelector" value="hello" />
+						<property name="perfSelector" value="hello" />
+					</bean>
+				</property>
+				<property name="driverCrawler">
+					<bean id="driverCrawler" class="crawler.DriverCrawler">
+						<property name="lastNameSelector" value="" />	
+						<property name="firstNameSelector" value="" />
+					</bean>
+				</property>
+				<property name="hippodromeCrawler">
+					<bean id="hippodromeCrawler" class="crawler.HippodromeCrawler">
+						<property name="nameSelector" value="" />
+						<property name="townSelector" value="" />	
+						<property name="countrySelector" value="" />			
+						<property name="track_typeSelector" value="" />			
+						<property name="lengthSelector" value="" />
+					</bean>
+				</property>
+				<property name="championshipCrawler">
+					<bean id="championshipCrawler" class="crawler.ChampionshipCrawler">
+						<property name="nameSelector" value="" />				
+						<property name="challenge_typeSelector" value="" />			
+						<property name="price_moneySelector" value="" />	
+					</bean>
+				</property>
+				<property name="raceCrawler">
+					<bean id="raceCrawler" class="crawler.RaceCrawler">
+						<property name="reunionSelector" value="" />
+						<property name="num_raceSelector" value="" />
+						<property name="dateSelector" value="" />
+					</bean>
+				</property>
+			</bean>
+		</property>
+	</bean>
+</beans>
+	
