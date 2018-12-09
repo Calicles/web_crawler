@@ -32,6 +32,8 @@ public class HorseDAO {
 		
 		horse.setName(rs.getString("name"));
 		
+		horse.setAge_sex(rs.getString("age_sex"));
+		
 		horse.setFather(getHorse(rs.getString("father")));
 		
 		horse.setMother(getHorse(rs.getString("mother")));
@@ -87,24 +89,26 @@ public class HorseDAO {
 		Connection connection= ConnectionFactory.getConnection();
 		
 		try {
-	        PreparedStatement ps = connection.prepareStatement("INSERT INTO horse VALUES (name= ?, father= ?, mother= ?,"
+	        PreparedStatement ps = connection.prepareStatement("INSERT INTO horse VALUES (name= ?, age_sex= ?, father= ?, mother= ?,"
 	        		+ " robe= ?, owner= ?, coach= ?, money_won= ?, perf= ?);");
 
 	        ps.setString(1, horse.getName());
+	        
+	        ps.setString(2, horse.getAge_sex());
 
-	        ps.setString(2, horse.getFather().getName());
+	        ps.setString(3, horse.getFather().getName());
 	        
-	        ps.setString(3, horse.getMother().getName());
+	        ps.setString(4, horse.getMother().getName());
 	        
-	        ps.setString(4, horse.getRobe());
+	        ps.setString(5, horse.getRobe());
 	        
-	        ps.setString(5, horse.getOwner());
+	        ps.setString(6, horse.getOwner());
 	        
-	        ps.setString(6, horse.getCoach());
+	        ps.setString(7, horse.getCoach());
 	        
-	        ps.setInt(7, horse.getMoney_won());
+	        ps.setDouble(8, horse.getMoney_won());
 	        
-	        ps.setString(8, horse.getPerf());
+	        ps.setString(9, horse.getPerf());
 	        
 	        
 	        if(ps.executeUpdate() == 1)
@@ -119,26 +123,28 @@ public class HorseDAO {
 		Connection conn= ConnectionFactory.getConnection();
 		
 		try {
-			PreparedStatement ps= conn.prepareStatement("UPDATE horse SET name= ?, father= ?, mother= ?, "+ 
+			PreparedStatement ps= conn.prepareStatement("UPDATE horse SET name= ?, age_sex= ?, father= ?, mother= ?, "+ 
 				"robe= ?, owner= ?, coach= ?, money_won= ?, perf= ? WHERE name= ?;");
 			
 			ps.setString(1, horse.getName());
+			
+			ps.setString(2, horse.getAge_sex());
 
-	        ps.setString(2, horse.getFather().getName());
+	        ps.setString(3, horse.getFather().getName());
 	        
-	        ps.setString(3, horse.getMother().getName());
+	        ps.setString(4, horse.getMother().getName());
 	        
-	        ps.setString(4, horse.getRobe());
+	        ps.setString(5, horse.getRobe());
 	        
-	        ps.setString(5, horse.getOwner());
+	        ps.setString(6, horse.getOwner());
 	        
-	        ps.setString(6, horse.getCoach());
+	        ps.setString(7, horse.getCoach());
 	        
-	        ps.setInt(7, horse.getMoney_won());
+	        ps.setDouble(8, horse.getMoney_won());
 	        
-	        ps.setString(8, horse.getPerf());
+	        ps.setString(9, horse.getPerf());
 	        
-	        ps.setString(9, horse.getName());
+	        ps.setString(10, horse.getName());
 	        
 	        if(ps.executeUpdate() == 1)
 	        	return true;

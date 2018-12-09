@@ -65,7 +65,9 @@ public class Spider {
 		for(String s:urlHorsesList) {
 			SpiderLeg leg= new SpiderLeg();
 			leg.crawl(s);
-			horses[i++]= (Horse) leg.bringEntity(horseCrawler);
+			horses[i]= (Horse) leg.bringEntity(horseCrawler);
+			System.out.println("in spider cheval: "+i+":  "+horses[i]);
+			i++;
 		}
 		
 		return horses;
@@ -75,7 +77,7 @@ public class Spider {
 		Driver[] drivers= new Driver[urlDriversList.size()];
 		int i=0;
 		
-		for(String s:urlHorsesList) {
+		for(String s:urlDriversList) {
 			SpiderLeg leg= new SpiderLeg();
 			leg.crawl(s);
 			drivers[i++]= (Driver) leg.bringEntity(driverCrawler);

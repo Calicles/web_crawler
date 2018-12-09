@@ -1,6 +1,8 @@
 package crawler;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.antoine.contracts.Crawler;
 import com.antoine.contracts.Entity;
@@ -8,12 +10,14 @@ import com.antoine.entity.Horse;
 
 public class HorseCrawler extends AbstractCrawler {
 	
-	private String nameSelector, fatherSelector, motherSelector, robeSelector, ownerSelector, coachSelector,
+	private String nameSelector, age_sexSelector, fatherSelector, motherSelector, robeSelector, ownerSelector, coachSelector,
 					price_moneySelector, perfSelector;
 
 	public void setNameSelector(String nameSelector) {
 		this.nameSelector = nameSelector;
 	}
+	
+	public void setAge_sexSelector(String age_sexSelector) {this.age_sexSelector= age_sexSelector;}
 
 	public void setFatherSelector(String fatherSelector) {
 		this.fatherSelector = fatherSelector;
@@ -45,29 +49,40 @@ public class HorseCrawler extends AbstractCrawler {
 
 	@Override
 	public Entity crawl(Document doc) {
-		String name, robe, owner, coach, perf, fatherName, motherName;
-		Horse father, mother;
-		int price_money;
+		String name, age_sex, robe, owner, coach, perf, fatherName, motherName;
+		double price_money;
 		Horse horse= new Horse();
 		
-		name= doc.getElementById(nameSelector).text();
-		horse.setName(name);
+		name= doc.getElementsContainingOwnText(nameSelector).text().split("-")[0]; System.out.println(name);
+		horse.setName(name.substring(0, name.length()-1));
 		
-		fatherName= doc.getElementById(fatherSelector).text();
+		age_sex= findElement(doc, age_sexSelector).text();
+		horse.setAge_sex(age_sex);												System.out.println("age: "+age_sex);
+		
+		fatherName= findElement(doc,fatherSelector).text();
 		if(fatherName.isEmpty()) horse.setFather(null);
-		else horse.setFather(new Horse(fatherName));
+		else { horse.setFather(new Horse(fatherName));							System.out.println("père:  "+fatherName);}
 		
-		motherName= doc.getElementById(motherSelector).text();
+		motherName= findElement(doc, motherSelector).text();
 		if(motherName.isEmpty()) horse.setMother(null);
-		else horse.setMother(new Horse(motherName));
+		else { horse.setMother(new Horse(motherName));							System.out.println("mère  :"+motherName);}
 		
-		price_money= Integer.parseInt(doc.getElementById(price_moneySelector).text());
-		horse.setMoney(price_money);
+		price_money= Double.parseDouble(findElement(doc, price_moneySelector).text());
+		horse.setMoney(price_money);											System.out.println("prix:   "+price_money);
 		
-		perf= doc.getElementById(perfSelector).text();
-		horse.setPerf(perf);
+		perf= findElement(doc, perfSelector).text();
+		horse.setPerf(perf);													System.out.println("perf:   "+perf);
 		
 		return horse;
+	}
+	
+	public Element findElement(Document doc, String selector) {
+		Elements elem= doc.getElementsContainingOwnText(selector);
+		Elements elements= elem.parents(); 
+		
+		System.out.println(elements.get(0).child(1).text());
+		return elements.get(0).child(1);
+		
 	}
 
 }

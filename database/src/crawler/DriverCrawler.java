@@ -23,12 +23,14 @@ public class DriverCrawler extends AbstractCrawler {
 		String lastName, firstName;
 		Driver driver= new Driver();
 		
-		lastName= doc.getElementById(lastNameSelector).text();
-		firstName= doc.getElementById(firstNameSelector).text();
+		String buffer= doc.getElementsContainingOwnText(lastNameSelector).text().split("-")[0]; System.out.println(buffer);
+		lastName= buffer.substring(3, buffer.length()-1);
+		firstName= buffer.substring(0, 2);
 		
 		driver.setLastName(lastName);
 		driver.setFirstName(firstName);
 		
+		System.out.println(firstName +"   "+lastName);
 		return driver;
 	}
 

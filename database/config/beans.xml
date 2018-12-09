@@ -8,26 +8,28 @@
 	
 	<bean id="canalTurfCrawler" class="model.Hive">
 		<constructor-arg type="String" value="config/coursesUrl.xml" />
-		<property name="spider">
-			<bean id="spider" class="model.Spider">
-				<property name="listDriverUrlSelector" value="la fiche du jockey" />
-				<property name="listHorseUrlSelector" value="la fiche du cheval" />
+		<property name="spider" ref="spider"/>
+	</bean>
+	<bean id="spider" class="model.Spider">
+				<property name="listDriverUrlSelector" value="fiche_jockey" />
+				<property name="listHorseUrlSelector" value="fiche_cheval" />
 				<property name="horseCrawler">
 					<bean id="horseCrawler" class="crawler.HorseCrawler">
-						<property name="nameSelector" value="hello" />
-						<property name="fatherSelector" value="hello" />
-						<property name="motherSelector" value="hello" />
-						<property name="robeSelector" value="hello" />
-						<property name="ownerSelector" value="hello" />
-						<property name="coachSelector" value="hello" />
-						<property name="money_wonSelector" value="hello" />
-						<property name="perfSelector" value="hello" />
+						<property name="nameSelector" value="la fiche" />
+						<property name="age_sexSelector" value="sexe" />
+						<property name="fatherSelector" value="père :" />
+						<property name="motherSelector" value="mère :" />
+						<property name="robeSelector" value="robe" />
+						<property name="ownerSelector" value="propriétaire" />
+						<property name="coachSelector" value="entraineur" />
+						<property name="money_wonSelector" value="gains" />
+						<property name="perfSelector" value="perf." />
 					</bean>
 				</property>
 				<property name="driverCrawler">
 					<bean id="driverCrawler" class="crawler.DriverCrawler">
-						<property name="lastNameSelector" value="" />	
-						<property name="firstNameSelector" value="" />
+						<property name="lastNameSelector" value="la fiche" />	
+						<property name="firstNameSelector" value="la fiche" />
 					</bean>
 				</property>
 				<property name="participationCrawler">
@@ -63,7 +65,5 @@
 					</bean>
 				</property>
 			</bean>
-		</property>
-	</bean>
 </beans>
 	
