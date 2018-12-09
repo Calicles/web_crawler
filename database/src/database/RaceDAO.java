@@ -39,7 +39,6 @@ public class RaceDAO {
 		race.setChampionship(ChampionshipDAO.getChampionship(rs.getInt("championship")));
 		race.setHippodrome(HippodromeDAO.getHippodrome(rs.getInt("hippodrome")));
 		race.setDate(rs.getDate("date"));
-		race.setPalmares(PalmaresDAO.getPalmares(rs.getInt("palmares")));
 		
 		return race;
 	}
@@ -90,7 +89,6 @@ public class RaceDAO {
 	        ps.setInt(3, race.getChampionship().getId());
 	        ps.setInt(4, race.getHippodrome().getId());
 	        ps.setDate(5, race.getDate());
-	        ps.setInt(6, race.getPalmares().getId());
 	        
 	        if(ps.executeUpdate() == 1) {
 	        	idAuto++;
@@ -114,7 +112,6 @@ public class RaceDAO {
 	        ps.setInt(3, race.getChampionship().getId());
 	        ps.setInt(4, race.getHippodrome().getId());
 	        ps.setDate(5, race.getDate());
-	        ps.setInt(6, race.getPalmares().getId());
 	        ps.setInt(7, race.getId());
 			
 	        

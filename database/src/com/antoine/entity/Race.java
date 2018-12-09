@@ -9,7 +9,6 @@ public class Race extends AbstractEntity {
 	int id= RaceDAO.idAuto, reunion, num_race; 
 	Championship championship;
 	Hippodrome hippodrome;
-	Palmares palmares;
 	Date date;
 	
 	public int getId() {return this.id;}
@@ -37,12 +36,6 @@ public class Race extends AbstractEntity {
 	}
 	public void setHippodrome(Hippodrome hippodrome) {
 		this.hippodrome = hippodrome;
-	}
-	public Palmares getPalmares() {
-		return palmares;
-	}
-	public void setPalmares(Palmares palmares) {
-		this.palmares = palmares;
 	}
 	public Date getDate() {
 		return date;
