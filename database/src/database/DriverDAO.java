@@ -82,8 +82,11 @@ public class DriverDAO {
 
 	        ps.setString(2, driver.getFirstName());
 	        
-	        if(ps.executeUpdate() == 1)
+	        if(ps.executeUpdate() == 1) {
+	        	System.out.println("driver enregistré: "+driver);
+	        	System.out.println("******************************************************");
 	        	return true;
+	        }
 	        
 		}catch(SQLException sqle) {throw new RuntimeException();}
 		

@@ -42,5 +42,16 @@ public class Horse extends AbstractEntity {
 	public void setRobe(String robe) {this.robe= robe;}
 	public void setMoney(double money_won) {this.money_won= money_won;}
 	public void setPerf(String perf) {this.perf= perf;}
+	
+	@Override
+	public String toString() {
+		String res= "name: "+name+", age/sex: "+age_sex;
+		
+		if(father != null) res += ", father: "+father.getName();
+		if(mother != null) res += ", mother: "+mother.getName();
+		
+		res += ", robe: "+robe+", owner: "+owner+", coach: "+coach+", money won: "+money_won+", perf: "+perf;
+		return res;
+	}
 
 }

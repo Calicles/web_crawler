@@ -11,8 +11,6 @@ import java.util.Set;
 import com.antoine.entity.Hippodrome;
 
 public class HippodromeDAO {
-
-	public static int idAuto= 0;
 	
 	public static Hippodrome getHippodrome(int id) {
 		Connection conn= ConnectionFactory.getConnection();
@@ -83,24 +81,26 @@ public class HippodromeDAO {
 		Connection connection= ConnectionFactory.getConnection();
 		
 		try {
-	        PreparedStatement ps = connection.prepareStatement("INSERT INTO hippodrome VALUES (name= ?, town= ?, "
-	        		+ "country= ?, track_type= ?, length= ?);");
-
-	        ps.setString(1, hippodrome.getName());
-
-	        ps.setString(2, hippodrome.getTown());
+	        PreparedStatement ps= connection.prepareStatement("INSERT INTO hippodrome (idhippodrome,name, town, country, track_type, length) VALUES (?,?,?,?,?,?);");
 	        
-	        ps.setString(3, hippodrome.getCountry());
+	        ps.setInt(1, hippodrome.getId());
 	        
-	        ps.setString(4, hippodrome.getTrack_type());
+	        ps.setString(2, hippodrome.getName());
 	        
-	        ps.setDouble(5, hippodrome.getLength());
+	        ps.setString(3, hippodrome.getTown());
+	        
+	        ps.setString(4, hippodrome.getCountry());
+	        
+	        ps.setString(5, hippodrome.getTrack_type());
+	        
+	       ps.setDouble(6, hippodrome.getLength());
 	        
 	        if(ps.executeUpdate() == 1) {
-	        	idAuto++;
+	        	System.out.println("hippodrome enregistré: "+hippodrome);
+	        	System.out.println("*******************************************");
 	        	return true;
 	        }
-		}catch(SQLException sqle) {throw new RuntimeException();}
+		}catch(SQLException sqle) {throw new RuntimeException(sqle);}
 		
 		return false;
 	}
@@ -136,7 +136,7 @@ public class HippodromeDAO {
 		Connection conn= ConnectionFactory.getConnection();
 		
 		try {
-			PreparedStatement ps= conn.prepareStatement("DELETE FROM hippodrome WHERE id= "+id+";");
+			PreparedStatement ps= conn.prepareStatement("DELETE FROM hippodrome WHERE idhippodrome= "+id+";");
 			
 			if(ps.executeUpdate() == 1)
 				return true;
@@ -144,6 +144,18 @@ public class HippodromeDAO {
 		}catch(SQLException sqle) {throw new RuntimeException(sqle.toString());}
 		
 		return false;
+	}
+	
+	public static int getNextId() {
+		Connection conn= ConnectionFactory.getConnection();
+		
+		try {
+			Statement stm = conn.createStatement();
+			ResultSet rs= stm.executeQuery("SELECT MAX(idhippodrome) FROM hippodrome;");
+			rs.next();
+			return rs.getInt("MAX(idhippodrome)") + 1;
+		}catch(SQLException sqle) {throw new RuntimeException(sqle);}
+		
 	}
 
 }

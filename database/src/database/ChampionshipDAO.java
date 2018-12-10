@@ -14,14 +14,12 @@ import database.ConnectionFactory;
 
 public class ChampionshipDAO {
 	
-	public static int idAuto= 0;
-	
 	public static Championship getChampionship(int id) {
 		Connection conn= ConnectionFactory.getConnection();
 		
 		try {
 			Statement stm= conn.createStatement();
-			ResultSet rs= stm.executeQuery("SELECT * FROM hippodrome WHERE id = "+id+";");
+			ResultSet rs= stm.executeQuery("SELECT * FROM hippodrome WHERE idchampionship = "+id+";");
 			
 			if(rs.next()) {
 				return extractChampionshipFromResultSet(rs);
@@ -31,8 +29,20 @@ public class ChampionshipDAO {
 		return null;
 	}
 
+	public static int getNextId() {
+		Connection conn= ConnectionFactory.getConnection();
+		try {
+			Statement stm= conn.createStatement();
+			ResultSet rs= stm.executeQuery("SELECT MAX(idchampionship) FROM championship;");
+			rs.next();
+			return rs.getInt("MAX(idchampionship)") + 1;
+		}catch(SQLException sqle) {throw new RuntimeException(sqle);}
+	}
+
 	private static Championship extractChampionshipFromResultSet(ResultSet rs) throws SQLException {
 		Championship championship= new Championship();
+		
+		championship.setId(rs.getInt("idchampionship"));
 		
 		championship.setName(rs.getString("name"));
 		
@@ -81,17 +91,18 @@ public class ChampionshipDAO {
 		Connection connection= ConnectionFactory.getConnection();
 		
 		try {
-	        PreparedStatement ps = connection.prepareStatement("INSERT INTO championship VALUES (name= ?, challenge_type= ?, "
+	        PreparedStatement ps = connection.prepareStatement("INSERT INTO championship VALUES (idchampionship= ?, name= ?, challenge_type= ?, "
 	        		+ "price_money= ?);");
 
-	        ps.setString(1, championship.getName());
-
-	        ps.setString(2, championship.getChallenge_type());
+	        ps.setInt(1, championship.getId());
 	        
-	        ps.setInt(3, championship.getPrice_money());
+	        ps.setString(2, championship.getName());
+
+	        ps.setString(3, championship.getChallenge_type());
+	        
+	        ps.setDouble(4, championship.getPrice_money());
 	        
 	        if(ps.executeUpdate() == 1) {
-	        	idAuto++;
 	        	return true;
 	        }
 	        
@@ -111,7 +122,7 @@ public class ChampionshipDAO {
 
 			ps.setString(2, championship.getChallenge_type());
 	       
-			ps.setInt(3, championship.getPrice_money());
+			ps.setDouble(3, championship.getPrice_money());
 	        
 	        ps.setInt(4, championship.getId());
 	        

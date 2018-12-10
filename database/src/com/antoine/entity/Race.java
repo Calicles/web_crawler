@@ -6,7 +6,7 @@ import database.RaceDAO;
 
 public class Race extends AbstractEntity {
 
-	int id= RaceDAO.idAuto, reunion, num_race; 
+	int id= RaceDAO.getNextId(), reunion, num_race; 
 	Championship championship;
 	Hippodrome hippodrome;
 	Date date;
@@ -44,7 +44,11 @@ public class Race extends AbstractEntity {
 		this.date = date;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "id: "+id+", id championship: "+championship.getId()+
+				" id hippodrome: "+hippodrome.getId()+", date: "+date.toString();
+	}
 	
 }
 

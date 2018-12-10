@@ -34,7 +34,7 @@
 				</property>
 				<property name="participationCrawler">
 					<bean id="participationCrawler" class="crawler.ParticipationCrawler">
-						<property name="id_horseSelector" value="" />
+						<property name="id_horseSelector" value="table table-striped table-condensed bord-all" />
 						<property name="redKmSelector" value="" />
 						<property name="horse_numberSelector" value="" />
 						<property name="positioningSelector" value="" />
@@ -43,7 +43,7 @@
 				</property>
 				<property name="hippodromeCrawler">
 					<bean id="hippodromeCrawler" class="crawler.HippodromeCrawler">
-						<property name="nameSelector" value="" />
+						<property name="nameSelector" value="h4" />
 						<property name="townSelector" value="" />	
 						<property name="countrySelector" value="" />			
 						<property name="track_typeSelector" value="" />			
@@ -52,14 +52,14 @@
 				</property>
 				<property name="championshipCrawler">
 					<bean id="championshipCrawler" class="crawler.ChampionshipCrawler">
-						<property name="nameSelector" value="" />				
+						<property name="nameSelector" value="h4" />				
 						<property name="challenge_typeSelector" value="" />			
 						<property name="price_moneySelector" value="" />	
 					</bean>
 				</property>
 				<property name="raceCrawler">
 					<bean id="raceCrawler" class="crawler.RaceCrawler">
-						<property name="reunionSelector" value="" />
+						<property name="reunionSelector" value="h4" />
 						<property name="num_raceSelector" value="" />
 						<property name="dateSelector" value="" />
 					</bean>

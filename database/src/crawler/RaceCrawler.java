@@ -30,22 +30,16 @@ public class RaceCrawler extends AbstractCrawler implements Crawler {
 	@Override
 	public Entity crawl(Document doc) {
 		int reunion, num_race;
-		Date date;
 		Race race= new Race();
 		
-		reunion= Integer.parseInt(doc.getElementById(reunionSelector).text());
+		String[] elems= doc.getElementsByAttributeValue("class", reunionSelector).text().split(" - ");
+		elems= elems[1].split(" ");
+		
+		reunion= Integer.parseInt(elems[1]);
 		race.setReunion(reunion);
 		
-		num_race= Integer.parseInt(doc.getElementById(num_raceSelector).text());
+		num_race= Integer.parseInt(elems[3]);
 		race.setNum_race(num_race);
-		SimpleDateFormat format= new SimpleDateFormat();
-		try {
-			date= new Date(format.parse(doc.getElementById(dateSelector).text()).getTime());
-			race.setDate(date);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			throw new RuntimeException(e.toString());
-		}
 		
 		return race;
 	}

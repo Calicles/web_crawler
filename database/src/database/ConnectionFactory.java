@@ -4,11 +4,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.Driver;
+import com.mysql.cj.jdbc.Driver;
 
 public class ConnectionFactory {
 	
-	public static String user, passwd, url;
+	public static String user="antoine", passwd="123456", url="jdbc:mysql://localhost:3306/hippo";
 	
 	static {
 		

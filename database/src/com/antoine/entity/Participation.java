@@ -50,6 +50,11 @@ public class Participation extends AbstractEntity {
 		this.id_race = id_race;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "id_hores: "+id_horse+", driver lastName: "+driver_lastName+
+				", driver_firstName: "+driver_firstName+", id_race: "+id_race+", position: "+positioning+", rating: "+rating+
+				", horse_num: "+horse_number;
+	}
 
 }

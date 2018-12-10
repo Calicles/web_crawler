@@ -94,10 +94,13 @@ public class ParticipationDAO {
 	        ps.setDouble(7, participation.getRating());
 	        ps.setString(8, participation.getRedKm());
 	        
-	        if(ps.executeUpdate() == 1)
+	        if(ps.executeUpdate() == 1) {
+	        	System.out.println("participation enregistré: "+participation);
+	        	System.out.println("**************************************************");
 	        	return true;
+	        }
 	        
-		}catch(SQLException sqle) {throw new RuntimeException();}
+		}catch(SQLException sqle) {throw new RuntimeException(sqle);}
 		
 		return false;
 	}

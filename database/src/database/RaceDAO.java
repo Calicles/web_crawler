@@ -13,8 +13,6 @@ import com.antoine.entity.Race;
 
 public class RaceDAO {
 	
-	public static int idAuto= 0;
-	
 	public static Race getPalmares(int reunion, int num_race, Date date, String championship) {
 		Connection conn= ConnectionFactory.getConnection();
 		
@@ -31,9 +29,20 @@ public class RaceDAO {
 		return null;
 	}
 
+	public static int getNextId() {
+		Connection conn= ConnectionFactory.getConnection();
+		try {
+			Statement stm= conn.createStatement();
+			ResultSet rs= stm.executeQuery("SELECT MAX(idrace) FROM race;");
+			rs.next();
+			return rs.getInt("MAX(idrace)")+ 1;
+		}catch(SQLException sqle) {throw new RuntimeException(sqle);}
+	}
+
 	private static Race extractRaceFromResultSet(ResultSet rs) throws SQLException {
 		Race race= new Race();
 		
+		race.setId(rs.getInt("idrace"));
 		race.setReunion(rs.getInt("reunion"));
 		race.setNum_race(rs.getInt("num_race"));
 		race.setChampionship(ChampionshipDAO.getChampionship(rs.getInt("championship")));
@@ -81,21 +90,23 @@ public class RaceDAO {
 		Connection connection= ConnectionFactory.getConnection();
 		
 		try {
-	        PreparedStatement ps = connection.prepareStatement("INSERT INTO race VALUES (reunion= ?, num_race= ?, "
-	        		+ "championship= ?, hippodrome= ?, date= ?, palmares= ?);");
+	        PreparedStatement ps = connection.prepareStatement("INSERT INTO race VALUES (idrace= ?, reunion= ?, num_race= ?, "
+	        		+ "championship= ?, hippodrome= ?, date= ?);");
 	        
-	        ps.setInt(1, race.getReunion());
-	        ps.setInt(2, race.getNum_race());
-	        ps.setInt(3, race.getChampionship().getId());
-	        ps.setInt(4, race.getHippodrome().getId());
-	        ps.setDate(5, race.getDate());
+	        ps.setInt(1, race.getId());
+	        ps.setInt(2, race.getReunion());
+	        ps.setInt(3, race.getNum_race());
+	        ps.setInt(4, race.getChampionship().getId());
+	        ps.setInt(5, race.getHippodrome().getId());
+	        ps.setDate(6, race.getDate());
 	        
 	        if(ps.executeUpdate() == 1) {
-	        	idAuto++;
+	        	System.out.println("race enregistré: "+race);
+	        	System.out.println("********************************************");
 	        	return true;
 	        }
 	        
-		}catch(SQLException sqle) {throw new RuntimeException();}
+		}catch(SQLException sqle) {throw new RuntimeException(sqle);}
 		
 		return false;
 	}

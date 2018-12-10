@@ -1,6 +1,9 @@
 package model;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.jsoup.nodes.Document;
@@ -16,7 +19,7 @@ import com.antoine.entity.Race;
 public class Spider {
 	
 	private List<String> urlDriversList, urlHorsesList;
-	private String listDriverUrlSelector, listHorseUrlSelector;
+	private String listDriverUrlSelector, listHorseUrlSelector, currentUrl;
 	private Crawler horseCrawler, driverCrawler, participationCrawler, raceCrawler, championshipCrawler, hippodromeCrawler;
 	private SpiderLeg leg;
 
@@ -52,6 +55,7 @@ public class Spider {
 	}
 
 	public void crawl(String url) throws IOException {
+		this.currentUrl= url;
 		leg= new SpiderLeg();
 		leg.crawl(url);
 		urlDriversList= leg.bringUrlList(listDriverUrlSelector);
@@ -87,7 +91,7 @@ public class Spider {
 	}
 	
 	public Participation[] bringParticipations() {
-		Participation[] participations= new Participation[urlDriversList.size()];
+		Participation[] participations;
 		Document doc= leg.getDocument();
 		
 		participations= (Participation[]) participationCrawler.crawlAll(doc);
@@ -100,7 +104,19 @@ public class Spider {
 	}
 	
 	public Race bringRace() {
-		return (Race) leg.bringEntity(raceCrawler);
+		SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd");
+		String datestr= currentUrl.split("/")[4];
+		Race race= (Race) leg.bringEntity(raceCrawler);
+		Date date= null;
+		try {
+			date= new Date(format.parse(datestr).getTime());
+			race.setDate(date);
+		} catch (ParseException e) {
+			
+			throw new RuntimeException(e.toString());
+		}
+		
+		return race;
 	}
 	
 	public Hippodrome bringHippodrome() {

@@ -94,5 +94,11 @@ public class Hive {
 		}
 	}
 	
+	public void printList() {
+		for(String s:listUrl) {
+			System.out.println("liste: "+s+"***********");
+		}
+	}
+	
 
 }

@@ -26,5 +26,10 @@ public class Driver extends AbstractEntity implements Entity{
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+	
+	@Override
+	public String toString() {
+		return "lastName: "+lastName+", firstName: "+firstName;
+	}
 
 }

@@ -61,17 +61,17 @@ public class HorseCrawler extends AbstractCrawler {
 		
 		fatherName= findElement(doc,fatherSelector).text();
 		if(fatherName.isEmpty()) horse.setFather(null);
-		else { horse.setFather(new Horse(fatherName));							System.out.println("père:  "+fatherName);}
+		else { horse.setFather(new Horse(fatherName));}
 		
 		motherName= findElement(doc, motherSelector).text();
 		if(motherName.isEmpty()) horse.setMother(null);
-		else { horse.setMother(new Horse(motherName));							System.out.println("mère  :"+motherName);}
+		else { horse.setMother(new Horse(motherName));}
 		
 		price_money= Double.parseDouble(findElement(doc, price_moneySelector).text());
-		horse.setMoney(price_money);											System.out.println("prix:   "+price_money);
+		horse.setMoney(price_money);
 		
 		perf= findElement(doc, perfSelector).text();
-		horse.setPerf(perf);													System.out.println("perf:   "+perf);
+		horse.setPerf(perf);			
 		
 		return horse;
 	}
@@ -80,7 +80,6 @@ public class HorseCrawler extends AbstractCrawler {
 		Elements elem= doc.getElementsContainingOwnText(selector);
 		Elements elements= elem.parents(); 
 		
-		System.out.println(elements.get(0).child(1).text());
 		return elements.get(0).child(1);
 		
 	}

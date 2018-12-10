@@ -4,7 +4,7 @@ import database.HippodromeDAO;
 
 public class Hippodrome extends AbstractEntity {
 
-	private int id= HippodromeDAO.idAuto;
+	private int id= HippodromeDAO.getNextId();
 	private String name, town, country, track_type;
 	private double length;
 	
@@ -43,6 +43,9 @@ public class Hippodrome extends AbstractEntity {
 		this.length = length;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "id: "+id+", name: "+name+", town: "+town+", track type: "+track_type+", length: "+length;
+	}
 	
 }

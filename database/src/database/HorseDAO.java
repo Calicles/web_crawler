@@ -30,7 +30,7 @@ public class HorseDAO {
 	private static Horse extractHorseFromResultSet(ResultSet rs) throws SQLException {
 		Horse horse= new Horse();
 		
-		horse.setName(rs.getString("name"));
+		horse.setName(rs.getString("horse_name"));
 		
 		horse.setAge_sex(rs.getString("age_sex"));
 		
@@ -89,7 +89,7 @@ public class HorseDAO {
 		Connection connection= ConnectionFactory.getConnection();
 		
 		try {
-	        PreparedStatement ps = connection.prepareStatement("INSERT INTO horse VALUES (name= ?, age_sex= ?, father= ?, mother= ?,"
+	        PreparedStatement ps = connection.prepareStatement("INSERT INTO horse VALUES (horse_name= ?, age_sex= ?, father= ?, mother= ?,"
 	        		+ " robe= ?, owner= ?, coach= ?, money_won= ?, perf= ?);");
 
 	        ps.setString(1, horse.getName());
@@ -111,10 +111,13 @@ public class HorseDAO {
 	        ps.setString(9, horse.getPerf());
 	        
 	        
-	        if(ps.executeUpdate() == 1)
+	        if(ps.executeUpdate() == 1) {
+	        	System.out.println("horse enregistré: "+horse);
+	        	System.out.println("*********************************************");
 	        	return true;
+	        }
 	        
-		}catch(SQLException sqle) {throw new RuntimeException();}
+		}catch(SQLException sqle) {throw new RuntimeException(sqle);}
 		
 		return false;
 	}
@@ -123,7 +126,7 @@ public class HorseDAO {
 		Connection conn= ConnectionFactory.getConnection();
 		
 		try {
-			PreparedStatement ps= conn.prepareStatement("UPDATE horse SET name= ?, age_sex= ?, father= ?, mother= ?, "+ 
+			PreparedStatement ps= conn.prepareStatement("UPDATE horse SET horse_name= ?, age_sex= ?, father= ?, mother= ?, "+ 
 				"robe= ?, owner= ?, coach= ?, money_won= ?, perf= ? WHERE name= ?;");
 			
 			ps.setString(1, horse.getName());
@@ -158,7 +161,7 @@ public class HorseDAO {
 		Connection conn= ConnectionFactory.getConnection();
 		
 		try {
-			PreparedStatement ps= conn.prepareStatement("DELETE FROM horse WHERE name= ?;");
+			PreparedStatement ps= conn.prepareStatement("DELETE FROM horse WHERE horse_name= ?;");
 			ps.setString(1, name);
 			
 			if(ps.executeUpdate() == 1)

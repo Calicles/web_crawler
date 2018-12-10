@@ -4,9 +4,9 @@ import database.ChampionshipDAO;
 
 public class Championship extends AbstractEntity {
 	
-	private int id= ChampionshipDAO.idAuto;
+	private int id= ChampionshipDAO.getNextId();
 	private String name, challenge_type;
-	private int price_money;
+	private double price_money;
 	
 	public int getId() {return this.id;}
 	public void setId(int id) {this.id= id;}
@@ -23,13 +23,17 @@ public class Championship extends AbstractEntity {
 	public void setChallenge_type(String challenge_type) {
 		this.challenge_type = challenge_type;
 	}
-	public int getPrice_money() {
+	public double getPrice_money() {
 		return price_money;
 	}
-	public void setPrice_money(int price_money) {
+	public void setPrice_money(double price_money) {
 		this.price_money = price_money;
 	}
 	
+	@Override
+	public String toString() {
+		return "id: "+id+", name: "+name+", challenge type: "+challenge_type+", price money: "+price_money;
+	}
 	
 
 }

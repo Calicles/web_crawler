@@ -1,6 +1,8 @@
 package crawler;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 
 import com.antoine.contracts.Entity;
@@ -49,20 +51,40 @@ public class ParticipationCrawler extends AbstractCrawler {
 	@Override
 	public Participation[] crawlAll(Document doc) {
 		Participation[] participations;
-		Elements id_horseElem= doc.getElementsByAttribute(id_horseSelector);
-		Elements horse_numberElem= doc.getElementsByAttribute(horse_numberSelector);
-		Elements positionElem= doc.getElementsByAttribute(positioningSelector);
-		Elements ratingElem= doc.getElementsByAttribute(ratingSelector);
-		Elements redKmElem= doc.getElementsByAttribute(redKmSelector);
 		
-		participations= new Participation[id_horseElem.size()];
+		Elements table= doc.getElementsByAttributeValue("class", id_horseSelector);
+		Elements tr= table.select("tr");
+		System.out.println(table);
+		System.out.println("*******************");
+		System.out.println(tr);
+		System.out.println("******************");
+		participations= new Participation[tr.size()];
 		
-		for(int i=0; i< id_horseElem.size(); i++) {
+		for(int i= 0; i < tr.size() -1; i++) {
+			Element row= tr.get(i); System.out.println("rox:"+row);
 			participations[i]= new Participation();
-			participations[i].setId_horse(id_horseElem.get(i).text());
-			participations[i].setPositioning(Integer.parseInt(positionElem.text()));
-			participations[i].setRating(Double.parseDouble(positionElem.text()));
-			participations[i].setRedKm(redKmElem.text());
+			for(int j= 0; j< row.childNodeSize(); j++) {
+				if(j == 0) {
+					String buffer= row.child(j).ownText(); System.out.println("j: "+j+buffer+"   rowchilds:"+row.childNodeSize());
+					int index;
+					if(i == 0)
+						index= buffer.indexOf("e");
+					else 
+						index = buffer.indexOf("è");
+					participations[i].setPositioning(Integer.parseInt(buffer.substring(0, index)));
+				}else if(j == 1) {
+					participations[i].setHorse_number(Integer.parseInt(row.child(j).ownText()));
+				
+				}else if(j == 2) {
+					participations[i].setId_horse(row.child(j).text());
+				}else if(j == 4) {
+					participations[i].setRating(Double.parseDouble(row.child(j).ownText()));
+				}else if(j == 5) {
+					participations[i].setRedKm(row.child(j).ownText());
+				}
+				
+			}
+			System.out.println(participations[i]);
 		}
 		
 		

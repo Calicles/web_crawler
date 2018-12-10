@@ -1,6 +1,9 @@
 package crawler;
 
+import java.util.Arrays;
+
 import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import com.antoine.contracts.Entity;
 import com.antoine.entity.Championship;
@@ -24,22 +27,27 @@ public class ChampionshipCrawler extends AbstractCrawler {
 
 	@Override
 	public Entity crawl(Document doc) {
-		String name, challenge_type;
-		int price_money;
+		String name, challenge_type= "";
+		double price_money;
 		Championship championship= new Championship();
 		
-		name= doc.getElementById(nameSelector).text();
+		String[] elems= doc.getElementsByAttributeValue("class", nameSelector).text().split(" - ");
+	
+		name= elems[0].substring(0, elems[1].length() -4);
 		championship.setName(name);
 		
-		if(!this.challenge_typeSelector.isEmpty()) {
-			challenge_type= doc.getElementById(challenge_typeSelector).text();
-			championship.setChallenge_type(challenge_type);
-		}
-		if(!this.price_moneySelector.isEmpty()) {
-			price_money= Integer.parseInt(doc.getElementById(price_moneySelector).text());
-			championship.setPrice_money(price_money);
-		}
 		
+		String[] buffer= elems[2].split(" ");
+		for(int i=1; i<buffer.length; i++) {
+			challenge_type += buffer[i]+" ";
+		}
+		challenge_type= challenge_type.substring(0, challenge_type.length() -1);
+		championship.setChallenge_type(challenge_type);
+		
+		price_money= Double.parseDouble(elems[3].substring(0, elems[3].length() - 1));
+		championship.setPrice_money(price_money);
+
+		System.out.println(name+" "+challenge_type+" "+price_money);
 		return championship;
 	}
 

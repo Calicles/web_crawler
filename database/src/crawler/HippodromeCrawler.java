@@ -1,6 +1,7 @@
 package crawler;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 import com.antoine.contracts.Crawler;
 import com.antoine.contracts.Entity;
@@ -36,21 +37,20 @@ public class HippodromeCrawler extends AbstractCrawler implements Crawler {
 		int length;
 		Hippodrome hippodrome= new Hippodrome();
 		
-		name= doc.getElementById(nameSelector).text();
+		String[] elems= doc.getElementsByAttributeValue("class", nameSelector).text().split(" - ");
+		
+		name= elems[2].split(" ")[0];
 		hippodrome.setName(name);
 		
-		if(!this.townSelector.isEmpty()) {
-			town= doc.getElementById(townSelector).text();
-			hippodrome.setTown(town);
-		}
+		hippodrome.setTown(name);
+		
 		if(!this.countrySelector.isEmpty()) {
 			country= doc.getElementById(countrySelector).text();
 			hippodrome.setCountry(country);
 		}
-		if(!this.lengthSelector.isEmpty()) {
-			length= Integer.parseInt(doc.getElementById(lengthSelector).text());
-			hippodrome.setLength(length);
-		}
+		length= Integer.parseInt(elems[3].substring(0, elems[3].length() - 1));
+		hippodrome.setLength(length);
+		
 		return hippodrome;
 	}
 
