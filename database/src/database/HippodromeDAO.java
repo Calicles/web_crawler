@@ -100,7 +100,11 @@ public class HippodromeDAO {
 	        	System.out.println("*******************************************");
 	        	return true;
 	        }
-		}catch(SQLException sqle) {throw new RuntimeException(sqle);}
+		}catch(SQLException sqle) {
+			if(sqle.toString().toLowerCase().contains("duplicate")) {
+				System.out.println("hippodrome déja enregistré");
+			}else 
+				throw new RuntimeException(sqle);}
 		
 		return false;
 	}

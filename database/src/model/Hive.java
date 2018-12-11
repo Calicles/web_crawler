@@ -15,6 +15,7 @@ import com.antoine.entity.Horse;
 import com.antoine.entity.Participation;
 import com.antoine.entity.Race;
 
+import database.ChampionshipDAO;
 import database.DriverDAO;
 import database.HippodromeDAO;
 import database.HorseDAO;
@@ -85,6 +86,7 @@ public class Hive {
 		}
 		
 		HippodromeDAO.insertHippodrome(hippodrome);
+		ChampionshipDAO.insertChampionship(championship);
 		RaceDAO.insertRace(race);
 		
 		for(int i=0; i<horses.length; i++) {

@@ -90,8 +90,8 @@ public class RaceDAO {
 		Connection connection= ConnectionFactory.getConnection();
 		
 		try {
-	        PreparedStatement ps = connection.prepareStatement("INSERT INTO race VALUES (idrace= ?, reunion= ?, num_race= ?, "
-	        		+ "championship= ?, hippodrome= ?, date= ?);");
+	        PreparedStatement ps = connection.prepareStatement("INSERT INTO race (idrace, reunion, num_race, "
+	        		+ "championship, hippodrome, date) VALUES (?,?,?,?,?,?);");
 	        
 	        ps.setInt(1, race.getId());
 	        ps.setInt(2, race.getReunion());

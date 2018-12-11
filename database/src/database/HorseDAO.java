@@ -87,18 +87,31 @@ public class HorseDAO {
 	
 	public static boolean insertHorse(Horse horse) {
 		Connection connection= ConnectionFactory.getConnection();
-		
+		String fatherName= null, motherName= null;
 		try {
-	        PreparedStatement ps = connection.prepareStatement("INSERT INTO horse VALUES (horse_name= ?, age_sex= ?, father= ?, mother= ?,"
-	        		+ " robe= ?, owner= ?, coach= ?, money_won= ?, perf= ?);");
+	        PreparedStatement ps = connection.prepareStatement("INSERT INTO horse (horse_name, age_sex, father, mother, "
+	        		+ "robe, owner, coach, money_won, perf) VALUES (?,?,?,?,?,?,?,?,?);");
+	        
+	        if(horse.getFather() != null) {
+	        	try {
+	        		fatherName= horse.getFather().getName();
+	        		insertHorse(horse.getFather());
+	        	}catch(RuntimeException e) {System.out.println("père déja enregistré");}
+	        }
+	        if(horse.getMother() != null) {
+	        	try {
+	        		motherName= horse.getMother().getName();
+	        		insertHorse(horse.getMother());
+	        	}catch(RuntimeException e) {System.out.println("mère déja enregistrée");}
+	        }
 
 	        ps.setString(1, horse.getName());
 	        
 	        ps.setString(2, horse.getAge_sex());
 
-	        ps.setString(3, horse.getFather().getName());
+	        ps.setString(3, fatherName);
 	        
-	        ps.setString(4, horse.getMother().getName());
+	        ps.setString(4, motherName);
 	        
 	        ps.setString(5, horse.getRobe());
 	        
@@ -109,7 +122,6 @@ public class HorseDAO {
 	        ps.setDouble(8, horse.getMoney_won());
 	        
 	        ps.setString(9, horse.getPerf());
-	        
 	        
 	        if(ps.executeUpdate() == 1) {
 	        	System.out.println("horse enregistré: "+horse);

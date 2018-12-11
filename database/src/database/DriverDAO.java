@@ -76,7 +76,7 @@ public class DriverDAO {
 		Connection connection= ConnectionFactory.getConnection();
 		
 		try {
-	        PreparedStatement ps = connection.prepareStatement("INSERT INTO driver VALUES (lastName= ?, firstName= ?);");
+	        PreparedStatement ps = connection.prepareStatement("INSERT INTO driver (lastName, firstName) VALUES (?,?);");
 
 	        ps.setString(1, driver.getLastName());
 
@@ -88,7 +88,11 @@ public class DriverDAO {
 	        	return true;
 	        }
 	        
-		}catch(SQLException sqle) {throw new RuntimeException();}
+		}catch(SQLException sqle) {
+			if(sqle.toString().toLowerCase().contains("duplicate")){
+				System.out.println("driver déjà enregistré");
+			}else
+				throw new RuntimeException(sqle);}
 		
 		return false;
 	}

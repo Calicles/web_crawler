@@ -82,8 +82,8 @@ public class ParticipationDAO {
 		Connection connection= ConnectionFactory.getConnection();
 		
 		try {
-	        PreparedStatement ps = connection.prepareStatement("INSERT INTO participation VALUES (id_horse= ?, "
-	        		+ "driver_lastName= ?, driver_firstName= ?, id_race= ?, horse_number= ?, positioning= ?, rating= ?, redKm= ?);");
+	        PreparedStatement ps = connection.prepareStatement("INSERT INTO participation (id_horse, "
+	        		+ "driver_lastName, driver_firstName, id_race, horse_number, positioning, rating, redKm) VALUES (?,?,?,?,?,?,?,?);");
 	        
 	        ps.setString(1, participation.getId_horse());
 	        ps.setString(2, participation.getDriver_lastName());

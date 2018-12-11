@@ -91,8 +91,8 @@ public class ChampionshipDAO {
 		Connection connection= ConnectionFactory.getConnection();
 		
 		try {
-	        PreparedStatement ps = connection.prepareStatement("INSERT INTO championship VALUES (idchampionship= ?, name= ?, challenge_type= ?, "
-	        		+ "price_money= ?);");
+	        PreparedStatement ps = connection.prepareStatement("INSERT INTO championship (idchampionship, name, challenge_type, "
+	        		+ "price_money) VALUES (?,?,?,?);");
 
 	        ps.setInt(1, championship.getId());
 	        
@@ -106,7 +106,11 @@ public class ChampionshipDAO {
 	        	return true;
 	        }
 	        
-		}catch(SQLException sqle) {throw new RuntimeException();}
+		}catch(SQLException sqle) {
+			if(sqle.toString().toLowerCase().contains("duplicate")) {
+				System.out.println("championship déja enregistré");
+			}else
+				throw new RuntimeException();}
 		
 		return false;
 	}

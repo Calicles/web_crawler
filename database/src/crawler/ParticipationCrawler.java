@@ -54,18 +54,15 @@ public class ParticipationCrawler extends AbstractCrawler {
 		
 		Elements table= doc.getElementsByAttributeValue("class", id_horseSelector);
 		Elements tr= table.select("tr");
-		System.out.println(table);
-		System.out.println("*******************");
-		System.out.println(tr);
-		System.out.println("******************");
+		
 		participations= new Participation[tr.size()];
 		
 		for(int i= 0; i < tr.size() -1; i++) {
-			Element row= tr.get(i); System.out.println("rox:"+row);
+			Element row= tr.get(i); 
 			participations[i]= new Participation();
 			for(int j= 0; j< row.childNodeSize(); j++) {
 				if(j == 0) {
-					String buffer= row.child(j).ownText(); System.out.println("j: "+j+buffer+"   rowchilds:"+row.childNodeSize());
+					String buffer= row.child(j).ownText(); 
 					int index;
 					if(i == 0)
 						index= buffer.indexOf("e");
@@ -84,7 +81,7 @@ public class ParticipationCrawler extends AbstractCrawler {
 				}
 				
 			}
-			System.out.println(participations[i]);
+			
 		}
 		
 		

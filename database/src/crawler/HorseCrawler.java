@@ -53,11 +53,11 @@ public class HorseCrawler extends AbstractCrawler {
 		double price_money;
 		Horse horse= new Horse();
 		
-		name= doc.getElementsContainingOwnText(nameSelector).text().split("-")[0]; System.out.println(name);
+		name= doc.getElementsContainingOwnText(nameSelector).text().split("-")[0]; 
 		horse.setName(name.substring(0, name.length()-1));
 		
 		age_sex= findElement(doc, age_sexSelector).text();
-		horse.setAge_sex(age_sex);												System.out.println("age: "+age_sex);
+		horse.setAge_sex(age_sex);												
 		
 		fatherName= findElement(doc,fatherSelector).text();
 		if(fatherName.isEmpty()) horse.setFather(null);
@@ -66,6 +66,16 @@ public class HorseCrawler extends AbstractCrawler {
 		motherName= findElement(doc, motherSelector).text();
 		if(motherName.isEmpty()) horse.setMother(null);
 		else { horse.setMother(new Horse(motherName));}
+		
+		robe= findElement(doc, robeSelector).text();
+		if(robe.length() < 20)
+			horse.setRobe(robe);
+		
+		owner= findElement(doc, ownerSelector).text();
+		horse.setOwner(owner);
+		
+		coach= findElement(doc, coachSelector).text();
+		horse.setCoach(coach);
 		
 		price_money= Double.parseDouble(findElement(doc, price_moneySelector).text());
 		horse.setMoney(price_money);

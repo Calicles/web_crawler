@@ -22,16 +22,13 @@ public class Test {
 
 	public static void main(String[] args) throws SQLException {
 		
-		Participation p= new Participation();
-		p.setDriver_lastName("Jones");
-		p.setDriver_firstName("Indiana");
-		p.setHorse_number(10);
-		p.setId_horse("JolyJumper");
-		p.setId_race(1);
-		p.setRating(10);
-		p.setPositioning(1);
-		p.setRedKm("111.2");
-		ParticipationDAO.insertParticipation(p);
+		Horse horse= new Horse();
+		horse.setName("jolyjumper");
+		horse.setRobe("BAI");
+		horse.setAge_sex("H7");
+		horse.setFather(new Horse("Henriette"));
+		
+		HorseDAO.insertHorse(horse);
 
 	}
 
