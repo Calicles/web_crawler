@@ -8,7 +8,9 @@ public class Championship extends AbstractEntity {
 	private String name, challenge_type;
 	private double price_money;
 	
-	public int getId() {return this.id;}
+	public int getId() {
+		return this.id;
+	}
 	public void setId(int id) {this.id= id;}
 	
 	public String getName() {

@@ -1,11 +1,15 @@
 package model;
 
 import java.io.IOException;
+import java.net.ConnectException;
+import java.net.SocketTimeoutException;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.net.ssl.SSLException;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.jsoup.UnsupportedMimeTypeException;
 import org.xml.sax.SAXException;
 
 import com.antoine.entity.Championship;
@@ -66,10 +70,11 @@ public class Hive {
 					persistEntity();
 
 					urlVisited.add(listUrl.remove(0));
-				}catch (IOException e) {
-					throw new RuntimeException(e.toString());
-					
-				}
+				}catch (Throwable t){
+					System.out.println("erreur avec l'url:   "+listUrl.get(0));
+					System.out.println(t.toString());
+					listUrl.remove(0);
+				 }
 			}
 			
 		});
@@ -97,8 +102,11 @@ public class Hive {
 	}
 	
 	public void printList() {
+		int i= 0;
 		for(String s:listUrl) {
-			System.out.println("liste: "+s+"***********");
+			if(i < 5)
+				System.out.println("liste: "+s+"***********");
+			i++;
 		}
 	}
 	

@@ -1,11 +1,15 @@
 package model;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.jsoup.Connection;
+import org.jsoup.HttpStatusException;
 import org.jsoup.Jsoup;
+import org.jsoup.UnsupportedMimeTypeException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -44,17 +48,17 @@ public class SpiderLeg {
 	
 	public void crawl(String url) throws IOException {
 		
-		Connection connection= Jsoup.connect(url).userAgent(USER_AGENT);
-		htmlDocument= connection.get();
-		
-		if(connection.response().statusCode() == 200) {
-			System.out.println("Visiting**Received web page at "+url);
-		}
-		
-		if(!connection.response().contentType().contains("text/html")) {
-			throw new RuntimeException("**Failure**Retrieved something other than HTML");
-		}
-		
+			Connection connection= Jsoup.connect(url).userAgent(USER_AGENT);
+			htmlDocument= connection.get();
+			
+			if(connection.response().statusCode() == 200) {
+				System.out.println("Visiting**Received web page at "+url);
+			}
+			
+			if(!connection.response().contentType().contains("text/html")) {
+				throw new RuntimeException("**Failure**Retrieved something other than HTML");
+			}
+
 	}
 	
 	public Entity bringEntity(Crawler crawler) {

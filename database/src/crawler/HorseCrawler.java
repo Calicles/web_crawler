@@ -68,7 +68,7 @@ public class HorseCrawler extends AbstractCrawler {
 		else { horse.setMother(new Horse(motherName));}
 		
 		robe= findElement(doc, robeSelector).text();
-		if(robe.length() < 20)
+		if(robe.length() < 30)
 			horse.setRobe(robe);
 		
 		owner= findElement(doc, ownerSelector).text();

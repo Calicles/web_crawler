@@ -26,6 +26,21 @@ public class HippodromeDAO {
 		
 		return null;
 	}
+	
+	public static Hippodrome getHippodrome(String name) {
+		Connection conn= ConnectionFactory.getConnection();
+		
+		try {
+			PreparedStatement ps= conn.prepareStatement("SELECT * FROM hippodrome WHERE name = ?;");
+			ps.setString(1, name);
+			ResultSet rs= ps.executeQuery();
+			if(rs.next()) {
+				return extractHippodromeFromResultSet(rs);
+			}
+		}catch(SQLException sqle) {throw new RuntimeException(sqle.toString());}
+		
+		return null;
+	}
 
 	private static Hippodrome extractHippodromeFromResultSet(ResultSet rs) throws SQLException {
 		Hippodrome hippodrome= new Hippodrome();
@@ -81,25 +96,31 @@ public class HippodromeDAO {
 		Connection connection= ConnectionFactory.getConnection();
 		
 		try {
-	        PreparedStatement ps= connection.prepareStatement("INSERT INTO hippodrome (idhippodrome,name, town, country, track_type, length) VALUES (?,?,?,?,?,?);");
-	        
-	        ps.setInt(1, hippodrome.getId());
-	        
-	        ps.setString(2, hippodrome.getName());
-	        
-	        ps.setString(3, hippodrome.getTown());
-	        
-	        ps.setString(4, hippodrome.getCountry());
-	        
-	        ps.setString(5, hippodrome.getTrack_type());
-	        
-	       ps.setDouble(6, hippodrome.getLength());
-	        
-	        if(ps.executeUpdate() == 1) {
-	        	System.out.println("hippodrome enregistré: "+hippodrome);
-	        	System.out.println("*******************************************");
-	        	return true;
-	        }
+			Hippodrome h;
+			if((h= getHippodrome(hippodrome.getName())) != null) {
+				hippodrome.setId(h.getId());
+			}
+			
+		        PreparedStatement ps= connection.prepareStatement("INSERT INTO hippodrome (idhippodrome,name, town, country, track_type, length) VALUES (?,?,?,?,?,?);");
+		        
+		        ps.setInt(1, hippodrome.getId());
+		        
+		        ps.setString(2, hippodrome.getName());
+		        
+		        ps.setString(3, hippodrome.getTown());
+		        
+		        ps.setString(4, hippodrome.getCountry());
+		        
+		        ps.setString(5, hippodrome.getTrack_type());
+		        
+		       ps.setDouble(6, hippodrome.getLength());
+		        
+		        if(ps.executeUpdate() == 1) {
+		        	System.out.println("hippodrome enregistré: "+hippodrome);
+		        	System.out.println("*******************************************");
+		        	return true;
+		        }
+			
 		}catch(SQLException sqle) {
 			if(sqle.toString().toLowerCase().contains("duplicate")) {
 				System.out.println("hippodrome déja enregistré");

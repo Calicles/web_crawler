@@ -22,14 +22,9 @@ public class Test {
 
 	public static void main(String[] args) throws SQLException {
 		
-		Horse horse= new Horse();
-		horse.setName("jolyjumper");
-		horse.setRobe("BAI");
-		horse.setAge_sex("H7");
-		horse.setFather(new Horse("Henriette"));
+		Connection conn= ConnectionFactory.getConnection();
+		Statement st= conn.createStatement();
 		
-		HorseDAO.insertHorse(horse);
-
 	}
 
 }

@@ -28,6 +28,21 @@ public class ChampionshipDAO {
 		
 		return null;
 	}
+	
+	public static Championship getChampionship(String name) {
+		Connection conn= ConnectionFactory.getConnection();
+		
+		try {
+			PreparedStatement ps= conn.prepareStatement("SELECT * FROM hippodrome WHERE name = ?;");
+			ps.setString(1, name);
+			ResultSet rs= ps.executeQuery();
+			if(rs.next()) {
+				return extractChampionshipFromResultSet(rs);
+			}
+		}catch(SQLException sqle) {throw new RuntimeException(sqle.toString());}
+		
+		return null;
+	}
 
 	public static int getNextId() {
 		Connection conn= ConnectionFactory.getConnection();
@@ -93,24 +108,31 @@ public class ChampionshipDAO {
 		try {
 	        PreparedStatement ps = connection.prepareStatement("INSERT INTO championship (idchampionship, name, challenge_type, "
 	        		+ "price_money) VALUES (?,?,?,?);");
-
-	        ps.setInt(1, championship.getId());
 	        
-	        ps.setString(2, championship.getName());
-
-	        ps.setString(3, championship.getChallenge_type());
-	        
-	        ps.setDouble(4, championship.getPrice_money());
-	        
-	        if(ps.executeUpdate() == 1) {
-	        	return true;
+	        Championship c;
+	        if((c= getChampionship(championship.getName())) != null) {
+	        	championship.setId(c.getId());
 	        }
-	        
+
+		        ps.setInt(1, championship.getId());
+		        
+		        ps.setString(2, championship.getName());
+	
+		        ps.setString(3, championship.getChallenge_type());
+		        
+		        ps.setDouble(4, championship.getPrice_money());
+		        
+		        if(ps.executeUpdate() == 1) {
+		        	System.out.println("championship enregistré: "+championship);
+		        	System.out.println("*****************************************");
+		        	return true;
+		        }
+	  
 		}catch(SQLException sqle) {
 			if(sqle.toString().toLowerCase().contains("duplicate")) {
 				System.out.println("championship déja enregistré");
 			}else
-				throw new RuntimeException();}
+				throw new RuntimeException(sqle);}
 		
 		return false;
 	}

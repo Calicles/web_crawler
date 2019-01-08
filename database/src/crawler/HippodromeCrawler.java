@@ -37,9 +37,9 @@ public class HippodromeCrawler extends AbstractCrawler implements Crawler {
 		int length;
 		Hippodrome hippodrome= new Hippodrome();
 		
-		String[] elems= doc.getElementsByAttributeValue("class", nameSelector).text().split(" - ");
+		Elements elems= doc.getElementsByAttributeValue("class", nameSelector);
 		
-		name= elems[2].split(" ")[0];
+		name= elems.get(0).ownText().split(" - ")[2];
 		hippodrome.setName(name);
 		
 		hippodrome.setTown(name);
@@ -48,7 +48,8 @@ public class HippodromeCrawler extends AbstractCrawler implements Crawler {
 			country= doc.getElementById(countrySelector).text();
 			hippodrome.setCountry(country);
 		}
-		length= Integer.parseInt(elems[3].substring(0, elems[3].length() - 1));
+		String buffer= elems.select("small").text().split(" - ")[1].trim();
+		length= Integer.parseInt(buffer.substring(0, buffer.length() -1));
 		hippodrome.setLength(length);
 		
 		return hippodrome;

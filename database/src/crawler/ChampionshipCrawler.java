@@ -33,7 +33,7 @@ public class ChampionshipCrawler extends AbstractCrawler {
 		
 		String[] elems= doc.getElementsByAttributeValue("class", nameSelector).text().split(" - ");
 	
-		name= elems[0].substring(0, elems[1].length() -4);
+		name= elems[0].split("[1-9]")[0].trim();
 		championship.setName(name);
 		
 		

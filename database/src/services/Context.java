@@ -17,6 +17,7 @@ public class Context {
 		Hive hive= (Hive) Context.f.getBean("canalTurfCrawler");
 		
 		hive.start();
+		
 	}
 	
 }
